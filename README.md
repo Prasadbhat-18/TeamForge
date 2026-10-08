@@ -1,28 +1,28 @@
-﻿# TaskForge
+# TaskForge
 
-> A full-stack project management application with Kanban boards, drag-and-drop task management, team collaboration, and activity feeds — built with the MERN stack.
+> A full-stack project management application with Kanban boards, drag-and-drop task management, team collaboration, and activity feeds � built with the MERN stack.
 
-🚀 **Live Demo:** [https://teamforge01.netlify.app](https://teamforge01.netlify.app)
+?? **Live Demo:** [https://teamforge00.netlify.app](https://teamforge00.netlify.app)
 
 ---
 
 ## Project Description
 
-TaskForge is a collaborative project management tool that lets teams organize work visually using Kanban boards. Each project has its own board with four columns — **Backlog**, **In Progress**, **In Review**, and **Done** — where tasks can be dragged between columns with changes saved to the database instantly. Team members can be added to projects, tasks can be assigned to individuals with priorities and due dates, and every action is logged in a live activity feed.
+TaskForge is a collaborative project management tool that lets teams organize work visually using Kanban boards. Each project has its own board with four columns � **Backlog**, **In Progress**, **In Review**, and **Done** � where tasks can be dragged between columns with changes saved to the database instantly. Team members can be added to projects, tasks can be assigned to individuals with priorities and due dates, and every action is logged in a live activity feed.
 
 ---
 
 ## Features
 
-- **Kanban Board with Drag-and-Drop** — move tasks across status columns with instant database persistence
-- **Project Management** — create and delete projects; each project has its own isolated board, team, and activity log
-- **Task CRUD** — create, edit, and delete tasks with a full dialog: title, description, priority (Low / Medium / High / Critical), status, assignee, and due date
-- **Search and Filters** — filter the board by keyword, priority, or assignee above the columns
-- **Team Management** — add and remove members from a project; only members can access the board
-- **Activity Feed** — every task change and membership update is logged inside the project's Activity tab
-- **Dashboard** — personal view showing total projects, open tasks, overdue tasks, and tasks assigned to you
-- **Authentication** — JWT-based register/login with protected routes
-- **Mobile-Responsive Layout** — full usability on phones and tablets via Tailwind CSS
+- **Kanban Board with Drag-and-Drop** � move tasks across status columns with instant database persistence
+- **Project Management** � create and delete projects; each project has its own isolated board, team, and activity log
+- **Task CRUD** � create, edit, and delete tasks with a full dialog: title, description, priority (Low / Medium / High / Critical), status, assignee, and due date
+- **Search and Filters** � filter the board by keyword, priority, or assignee above the columns
+- **Team Management** � add and remove members from a project; only members can access the board
+- **Activity Feed** � every task change and membership update is logged inside the project's Activity tab
+- **Dashboard** � personal view showing total projects, open tasks, overdue tasks, and tasks assigned to you
+- **Authentication** � JWT-based register/login with protected routes
+- **Mobile-Responsive Layout** � full usability on phones and tablets via Tailwind CSS
 
 ---
 
@@ -60,9 +60,9 @@ TaskForge is a collaborative project management tool that lets teams organize wo
 
 ### Prerequisites
 
-- **Node.js** ≥ 18
-- **npm** ≥ 9
-- **MongoDB** — [Atlas free tier](https://www.mongodb.com/atlas) or a local MongoDB instance
+- **Node.js** = 18
+- **npm** = 9
+- **MongoDB** � [Atlas free tier](https://www.mongodb.com/atlas) or a local MongoDB instance
 
 ### 1. Clone the repository
 
@@ -145,7 +145,7 @@ The output lands in `client/dist`. Deploy that folder to any static host (Vercel
 
 ## Demo Credentials
 
-Try the live app at **[https://teamforge01.netlify.app](https://teamforge01.netlify.app)** using these credentials:
+Try the live app at **[https://teamforge00.netlify.app](https://teamforge00.netlify.app)** using these credentials:
 
 ```
 Email:    demo1@taskforge.dev
@@ -157,7 +157,7 @@ Password: Demo@1234
 
 ---
 
-## AI Tool Used — Kiro
+## AI Tool Used � Kiro
 
 This project was built using **[Kiro](https://kiro.dev)**, an AI-powered development environment built on VS Code. Kiro is an agentic coding assistant that can read and write files, run terminal commands, and work autonomously through complex multi-step tasks.
 
@@ -165,23 +165,23 @@ This project was built using **[Kiro](https://kiro.dev)**, an AI-powered develop
 
 ## AI Development Experience
 
-Kiro was used throughout the entire development lifecycle — from initial scaffolding to debugging and documentation. Rather than just suggesting code snippets, Kiro acted as a full development partner: it read the existing codebase, made decisions about architecture, implemented features end-to-end, ran builds to verify correctness, and fixed errors it discovered along the way.
+Kiro was used throughout the entire development lifecycle � from initial scaffolding to debugging and documentation. Rather than just suggesting code snippets, Kiro acted as a full development partner: it read the existing codebase, made decisions about architecture, implemented features end-to-end, ran builds to verify correctness, and fixed errors it discovered along the way.
 
 ### Specific tasks where Kiro was used
 
 **1. Full-Stack Application Scaffolding**
-Kiro generated the entire initial project structure from scratch — the Express server with MongoDB connection, Mongoose models (`User`, `Project`, `Task`, `Activity`), JWT authentication middleware, Zod validation schemas, and the React frontend with Vite, Tailwind CSS, and React Router. It wired all the layers together and ensured the API and client were correctly connected from the start.
+Kiro generated the entire initial project structure from scratch � the Express server with MongoDB connection, Mongoose models (`User`, `Project`, `Task`, `Activity`), JWT authentication middleware, Zod validation schemas, and the React frontend with Vite, Tailwind CSS, and React Router. It wired all the layers together and ensured the API and client were correctly connected from the start.
 
 **2. Kanban Board and Drag-and-Drop Implementation**
-Kiro implemented the complete Kanban board component using `@hello-pangea/dnd`. This included the `DragDropContext`, `Droppable` column containers, and `Draggable` task cards. It also wrote the `PATCH /api/tasks/:id/status` endpoint on the backend and connected the drag-end handler to optimistically update the UI while persisting the new status to MongoDB — with snapshot-based rollback on failure.
+Kiro implemented the complete Kanban board component using `@hello-pangea/dnd`. This included the `DragDropContext`, `Droppable` column containers, and `Draggable` task cards. It also wrote the `PATCH /api/tasks/:id/status` endpoint on the backend and connected the drag-end handler to optimistically update the UI while persisting the new status to MongoDB � with snapshot-based rollback on failure.
 
 **3. API Development and Database Integration**
-Kiro created all REST API endpoints across auth, projects, tasks, activity, and dashboard resources. It wrote the Mongoose aggregation pipeline in `projectController` to count tasks per project and attach those counts to project cards — a non-trivial query that joins the `tasks` collection against each project. It also built the activity logging system that automatically records every task mutation and membership change.
+Kiro created all REST API endpoints across auth, projects, tasks, activity, and dashboard resources. It wrote the Mongoose aggregation pipeline in `projectController` to count tasks per project and attach those counts to project cards � a non-trivial query that joins the `tasks` collection against each project. It also built the activity logging system that automatically records every task mutation and membership change.
 
 **4. Debugging and Crash Fixes**
-When the application was crashing on startup, Kiro diagnosed the root causes by reading all key files, identifying broken imports, incorrect middleware ordering, and missing environment variable guards. It fixed a duplicate Tailwind class conflict on the board's search wrapper, corrected the modal dismissal order in the delete-project handler (ensuring `setDeleteConfirm(false)` fires before `navigate()`), and resolved a series of runtime errors — then verified the fix by running `vite build` to confirm zero errors before committing.
+When the application was crashing on startup, Kiro diagnosed the root causes by reading all key files, identifying broken imports, incorrect middleware ordering, and missing environment variable guards. It fixed a duplicate Tailwind class conflict on the board's search wrapper, corrected the modal dismissal order in the delete-project handler (ensuring `setDeleteConfirm(false)` fires before `navigate()`), and resolved a series of runtime errors � then verified the fix by running `vite build` to confirm zero errors before committing.
 
-**5. Component Development — Task Dialog and Project Cards**
+**5. Component Development � Task Dialog and Project Cards**
 Kiro built the full task create/edit dialog using React Hook Form and Zod for client-side validation. The dialog handles both create and edit modes from a single component, populates all fields (title, description, priority, assignee, due date, status) from existing task data when editing, and calls the correct API endpoint based on mode. It also added task count chips to project cards using data from the server aggregation, and built the delete-project confirmation modal with proper state management.
 
 ---
@@ -190,24 +190,24 @@ Kiro built the full task create/edit dialog using React Hook Form and Zod for cl
 
 ```
 taskforge/
-├── client/                   # Vite + React frontend
-│   ├── src/
-│   │   ├── api/              # Axios wrappers per resource
-│   │   ├── components/       # Board, TaskDialog, Layout, ProtectedRoute
-│   │   ├── context/          # AuthContext (JWT storage + user state)
-│   │   ├── lib/              # axios.js (interceptors), utils.js
-│   │   └── pages/            # DashboardPage, ProjectsPage, ProjectDetailPage
-│   └── vite.config.js
-├── server/                   # Express + Mongoose backend
-│   └── src/
-│       ├── controllers/      # projectController, taskController, authController, …
-│       ├── middleware/        # authMiddleware, errorHandler, validate, projectAccess
-│       ├── models/           # Project, Task, User, Activity
-│       ├── routes/           # projects, tasks, auth, dashboard, activity
-│       ├── scripts/          # seed.js
-│       └── validators/       # Zod schemas
-├── package.json              # Root: concurrently dev script
-└── README.md
++-- client/                   # Vite + React frontend
+�   +-- src/
+�   �   +-- api/              # Axios wrappers per resource
+�   �   +-- components/       # Board, TaskDialog, Layout, ProtectedRoute
+�   �   +-- context/          # AuthContext (JWT storage + user state)
+�   �   +-- lib/              # axios.js (interceptors), utils.js
+�   �   +-- pages/            # DashboardPage, ProjectsPage, ProjectDetailPage
+�   +-- vite.config.js
++-- server/                   # Express + Mongoose backend
+�   +-- src/
+�       +-- controllers/      # projectController, taskController, authController, �
+�       +-- middleware/        # authMiddleware, errorHandler, validate, projectAccess
+�       +-- models/           # Project, Task, User, Activity
+�       +-- routes/           # projects, tasks, auth, dashboard, activity
+�       +-- scripts/          # seed.js
+�       +-- validators/       # Zod schemas
++-- package.json              # Root: concurrently dev script
++-- README.md
 ```
 
 ---
