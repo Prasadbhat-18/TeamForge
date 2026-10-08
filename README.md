@@ -2,6 +2,8 @@
 
 > A full-stack project management application with Kanban boards, drag-and-drop task management, team collaboration, and activity feeds — built with the MERN stack.
 
+🚀 **Live Demo:** [https://teamforge01.netlify.app](https://teamforge01.netlify.app)
+
 ---
 
 ## Project Description
@@ -142,6 +144,8 @@ The output lands in `client/dist`. Deploy that folder to any static host (Vercel
 ---
 
 ## Demo Credentials
+
+Try the live app at **[https://teamforge01.netlify.app](https://teamforge01.netlify.app)** using these credentials:
 
 ```
 Email:    demo1@taskforge.dev
