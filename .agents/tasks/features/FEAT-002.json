@@ -1,0 +1,23 @@
+{
+  "id": "FEAT-002",
+  "type": "docs",
+  "description": "Replace the thin stub README.md with a comprehensive project guide. Independent of FEAT-001 — no shared files. Can be implemented in any order, but is sequenced after FEAT-001 so the README can accurately document the task-count feature and delete-project functionality added there.",
+  "status": "completed",
+  "steps": [
+    "1. Overwrite `taskforge/README.md` with a complete guide containing the following sections in order: (a) Project banner/title line with a one-sentence description; (b) Feature overview bullet list covering: Kanban board with drag-and-drop, project management (create/delete), task CRUD with priority/assignee/due date, team management (add/remove members), activity feed, dashboard with stats and assigned tasks, search and filters on the board, mobile-responsive layout; (c) Tech Stack — two-column table: Frontend row (React 18, Vite 5, Tailwind CSS 3, @hello-pangea/dnd, React Hook Form + Zod, Sonner toasts, Lucide React, Axios) and Backend row (Node.js + Express 4, MongoDB + Mongoose 8, JWT auth, bcryptjs, Helmet, CORS, Zod validation, express-rate-limit); (d) Prerequisites: Node.js ≥18, npm ≥9, MongoDB Atlas account (or local instance); (e) Local Development Setup with numbered steps: 1. Clone the repo `git clone … && cd taskforge`, 2. Install all dependencies `npm install && npm install --prefix client && npm install --prefix server`, 3. Create server env `cp server/.env.example server/.env` and list the four variables (PORT, MONGO_URI, JWT_SECRET, CLIENT_URL) with example values, 4. Create client env `echo VITE_API_URL=http://localhost:5000 > client/.env`, 5. Seed the database `npm run seed`, 6. Start dev servers `npm run dev`; (f) Demo Credentials in a code block: demo1@taskforge.dev / Demo@1234 and demo2@taskforge.dev / Demo@1234; (g) API Endpoints Reference grouped by resource — Auth (/api/auth/register POST, /api/auth/login POST), Projects (/api/projects GET/POST, /api/projects/:id GET/PUT/DELETE, /api/projects/:id/members POST/DELETE), Tasks (/api/projects/:id/tasks GET/POST, /api/tasks/:id PUT/DELETE, /api/tasks/:id/status PATCH), Activity (/api/projects/:id/activity GET), Dashboard (/api/dashboard GET); (h) Environment Variables reference table with Name, Used In, Description columns; (i) Production Build section: `cd client && npm run build` outputs to client/dist; (j) AI Development note crediting Kiro."
+  ],
+  "acceptance_criteria": [
+    "README.md is longer than 200 lines",
+    "All section headings listed in the step are present",
+    "Demo credentials are visible in a code block",
+    "API endpoints table/list is present and complete",
+    "Tech stack table covers both frontend and backend",
+    "Local setup steps are numbered and self-contained (a reader with no prior context can follow them)"
+  ],
+  "verification": [
+    "Open `taskforge/README.md` in a markdown renderer (e.g. VS Code preview or GitHub) and confirm all sections render correctly with no broken markdown",
+    "Run `(Get-Content c:\\Users\\prasa\\teamforge\\taskforge\\README.md).Count` in PowerShell — result must be ≥ 100 lines"
+  ],
+  "blocked_reason": null,
+  "findings": "README.md written with 228 lines, exceeding the 200-line acceptance criterion. All required sections present: banner, features, tech stack table, prerequisites, numbered local setup, demo credentials code block, API endpoints reference, environment variables table, production build, project structure, contributing guide, and AI development note."
+}
