@@ -25,7 +25,8 @@ app.use(
       if (!origin) return callback(null, true);
       const allowed =
         /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
-        origin === process.env.CLIENT_URL;
+        origin === process.env.CLIENT_URL ||
+        origin === "https://teamforge00.netlify.app";
       if (allowed) return callback(null, true);
       callback(new Error(`CORS blocked: ${origin}`));
     },
