@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { getTasks, patchTaskStatus, createTask, updateTask, deleteTask } from "../api/tasks.js";
 import { formatDate, isOverdue, getInitials, getAvatarColor } from "../lib/utils.js";
 import TaskDialog from "./TaskDialog.jsx";
-import { Plus, Search, Trash2 } from "lucide-react";
+import { Plus, Search, Trash2, X } from "lucide-react";
 
 const COLS = [
   { id: "TODO",        label: "To Do",       color: "bg-gray-400" },
@@ -107,7 +107,7 @@ export default function Board({ projectId, members }) {
       )
         return false;
       if (filterPriority && t.priority !== filterPriority) return false;
-      if (filterAssignee && (t.assignee?._id || t.assignee) !== filterAssignee) return false;
+      if (filterAssignee && (t.assignee?._id ?? t.assignee)?.toString() !== filterAssignee) return false;
       return true;
     });
   }, [tasks, search, filterPriority, filterAssignee]);
@@ -182,15 +182,24 @@ export default function Board({ projectId, members }) {
   return (
     <div className="space-y-4">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-3 bg-white rounded-xl border border-gray-200 p-3 shadow-sm">
-        <div className="relative flex-1 min-w-[180px]">
+      <div className="flex flex-wrap gap-2 items-center bg-white rounded-xl border border-gray-200 p-3 shadow-sm">
+        <div className="relative flex-1 min-w-0 min-w-[180px]">
           <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
-            className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className={`w-full pl-8 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 ${search ? "pr-7" : "pr-3"}`}
             placeholder="Search tasks…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+          {search && (
+            <button
+              onClick={() => setSearch('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              aria-label="Clear search"
+            >
+              <X size={13} />
+            </button>
+          )}
         </div>
         <select className={sel} value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}>
           <option value="">All priorities</option>
@@ -215,8 +224,9 @@ export default function Board({ projectId, members }) {
       </div>
 
       {/* Kanban columns */}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex gap-4 overflow-x-auto pb-4 -mx-1 px-1">
+      <div className="w-full overflow-x-auto">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="flex gap-4 pb-4 -mx-1 px-1">
           {COLS.map((col) => {
             const colTasks = byCol(col.id);
             return (
@@ -289,6 +299,7 @@ export default function Board({ projectId, members }) {
           })}
         </div>
       </DragDropContext>
+      </div>
 
       <TaskDialog
         open={dialog.open}

@@ -1,12 +1,12 @@
-﻿import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getProject, addMember, removeMember } from "../api/projects.js";
+import { getProject, addMember, removeMember, deleteProject } from "../api/projects.js";
 import { getActivity } from "../api/activity.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getInitials, getAvatarColor, formatRelativeTime, formatActivity } from "../lib/utils.js";
 import Board from "../components/Board.jsx";
-import { Users, Activity, KanbanSquare, UserPlus, Trash2, Loader2, Shield, User } from "lucide-react";
+import { Users, Activity, KanbanSquare, UserPlus, Trash2, Loader2, Shield, User, X } from "lucide-react";
 
 function Tab({ label, active, onClick, icon:Icon }) {
   return (
@@ -21,6 +21,7 @@ function Skeleton({ className }) { return <div className={`animate-pulse bg-gray
 
 export default function ProjectDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [project, setProject] = useState(null);
   const [tab, setTab] = useState("board");
@@ -29,6 +30,8 @@ export default function ProjectDetailPage() {
   const [memberEmail, setMemberEmail] = useState("");
   const [memberLoading, setMemberLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     getProject(id).then(setProject).finally(()=>setLoading(false));
@@ -78,13 +81,59 @@ export default function ProjectDetailPage() {
     }
   };
 
+  const handleDeleteProject = async () => {
+    setDeleting(true);
+    try {
+      await deleteProject(id);
+      toast.success("Project deleted");
+      navigate("/projects");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to delete project");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div>
-        <h1 className="text-xl font-bold text-gray-900">{project.name}</h1>
-        {project.description && <p className="text-sm text-gray-500 mt-1">{project.description}</p>}
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="text-xl font-bold text-gray-900">{project.name}</h1>
+          {project.description && <p className="text-sm text-gray-500 mt-1">{project.description}</p>}
+        </div>
+        {isOwner && (
+          <button
+            onClick={() => setDeleteConfirm(true)}
+            className="text-sm text-red-600 hover:text-red-800 flex items-center gap-1.5 border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-50 flex-shrink-0"
+          >
+            <Trash2 size={15} /> Delete project
+          </button>
+        )}
       </div>
+
+      {/* Delete confirmation modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Delete project</h2>
+              <button onClick={() => setDeleteConfirm(false)} aria-label="Close" className="text-gray-400 hover:text-gray-600 p-1"><X size={18}/></button>
+            </div>
+            <p className="text-sm text-gray-600 mb-2">Are you sure you want to delete <span className="font-semibold text-gray-900">{project.name}</span>?</p>
+            <p className="text-sm text-red-500 mb-5">This will permanently delete the project and all its tasks. This action cannot be undone.</p>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setDeleteConfirm(false)}
+                className="flex-1 py-2.5 text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
+              <button type="button" onClick={handleDeleteProject} disabled={deleting}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg disabled:opacity-60">
+                {deleting && <Loader2 size={14} className="animate-spin" />}
+                {deleting ? "Deleting…" : "Delete project"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex border-b border-gray-200 gap-1 overflow-x-auto">

@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import Project from '../models/Project.js';
 import Task from '../models/Task.js';
 import Activity from '../models/Activity.js';
@@ -22,8 +22,30 @@ export const getProjects = asyncHandler(async (req, res) => {
   const projects = await Project.find({ 'members.user': req.user._id })
     .populate('owner', 'name email')
     .populate('members.user', 'name email')
-    .sort({ createdAt: -1 });
-  res.json(projects);
+    .sort({ createdAt: -1 })
+    .lean();
+
+  const ids = projects.map((p) => p._id);
+
+  const counts = await Task.aggregate([
+    { $match: { project: { $in: ids } } },
+    {
+      $group: {
+        _id: '$project',
+        totalTasks: { $sum: 1 },
+        doneTasks: { $sum: { $cond: [{ $eq: ['$status', 'DONE'] }, 1, 0] } },
+      },
+    },
+  ]);
+
+  const countMap = new Map(counts.map((c) => [c._id.toString(), c]));
+
+  const result = projects.map((p) => {
+    const c = countMap.get(p._id.toString());
+    return { ...p, totalTasks: c?.totalTasks ?? 0, doneTasks: c?.doneTasks ?? 0 };
+  });
+
+  res.json(result);
 });
 
 export const getProject = asyncHandler(async (req, res) => {

@@ -1,11 +1,11 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { getProjects, createProject } from "../api/projects.js";
-import { FolderKanban, Plus, Users, Calendar, X, Loader2 } from "lucide-react";
+import { FolderKanban, Plus, Users, Calendar, X, Loader2, CheckSquare } from "lucide-react";
 import { formatDate } from "../lib/utils.js";
 
 const schema = z.object({
@@ -22,7 +22,7 @@ export default function ProjectsPage() {
   const [saving, setSaving] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
 
-  const load = () => getProjects().then(setProjects).finally(() => setLoading(false));
+  const load = () => getProjects().then(setProjects).catch(e => toast.error(e.response?.data?.message || 'Failed to load projects')).finally(() => setLoading(false));
   useEffect(() => { load(); }, []);
 
   const onSubmit = async (data) => {
@@ -79,6 +79,7 @@ export default function ProjectsPage() {
               <div className="flex items-center gap-4 mt-4 text-xs text-gray-400">
                 <span className="flex items-center gap-1"><Users size={13} />{p.members?.length||0} members</span>
                 <span className="flex items-center gap-1"><Calendar size={13} />{formatDate(p.createdAt)}</span>
+                <span className="flex items-center gap-1"><CheckSquare size={13} />{p.totalTasks ?? 0} tasks · {p.doneTasks ?? 0} done</span>
               </div>
             </Link>
           ))}
