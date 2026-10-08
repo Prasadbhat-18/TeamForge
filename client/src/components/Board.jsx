@@ -183,7 +183,7 @@ export default function Board({ projectId, members }) {
     <div className="space-y-4">
       {/* Toolbar */}
       <div className="flex flex-wrap gap-2 items-center bg-white rounded-xl border border-gray-200 p-3 shadow-sm">
-        <div className="relative flex-1 min-w-0 min-w-[180px]">
+        <div className="relative flex-1 min-w-[180px]">
           <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             className={`w-full pl-8 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 ${search ? "pr-7" : "pr-3"}`}

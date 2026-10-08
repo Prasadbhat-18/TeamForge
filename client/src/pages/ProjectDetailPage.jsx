@@ -85,10 +85,11 @@ export default function ProjectDetailPage() {
     setDeleting(true);
     try {
       await deleteProject(id);
-      toast.success("Project deleted");
-      navigate("/projects");
+      toast.success('Project deleted');
+      setDeleteConfirm(false);   // close modal first
+      navigate('/projects');
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to delete project");
+      toast.error(err.response?.data?.message || 'Failed to delete project');
     } finally {
       setDeleting(false);
     }
