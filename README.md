@@ -1,63 +1,89 @@
 ﻿# TaskForge
 
-> A full-stack project management app with Kanban boards, drag-and-drop task management, team collaboration, and real-time activity feeds.
+> A full-stack project management application with Kanban boards, drag-and-drop task management, team collaboration, and activity feeds — built with the MERN stack.
+
+---
+
+## Project Description
+
+TaskForge is a collaborative project management tool that lets teams organize work visually using Kanban boards. Each project has its own board with four columns — **Backlog**, **In Progress**, **In Review**, and **Done** — where tasks can be dragged between columns with changes saved to the database instantly. Team members can be added to projects, tasks can be assigned to individuals with priorities and due dates, and every action is logged in a live activity feed.
 
 ---
 
 ## Features
 
-- **Kanban Board with Drag-and-Drop** — move tasks across columns (Backlog → In Progress → In Review → Done) with instant DB persistence powered by `@hello-pangea/dnd`
-- **Project Management** — create and delete projects; each project has its own board, team, and activity feed
+- **Kanban Board with Drag-and-Drop** — move tasks across status columns with instant database persistence
+- **Project Management** — create and delete projects; each project has its own isolated board, team, and activity log
 - **Task CRUD** — create, edit, and delete tasks with a full dialog: title, description, priority (Low / Medium / High / Critical), status, assignee, and due date
+- **Search and Filters** — filter the board by keyword, priority, or assignee above the columns
 - **Team Management** — add and remove members from a project; only members can access the board
-- **Activity Feed** — every task and membership change is logged and shown in the Activity tab inside a project
-- **Dashboard** — personal view showing global stats (total projects, open tasks, overdue tasks) and tasks assigned to you
-- **Search and Filters** — filter the board by keyword, priority, or assignee directly above the columns
-- **Mobile-Responsive Layout** — Tailwind CSS responsive grid; full usability on phones and tablets
+- **Activity Feed** — every task change and membership update is logged inside the project's Activity tab
+- **Dashboard** — personal view showing total projects, open tasks, overdue tasks, and tasks assigned to you
+- **Authentication** — JWT-based register/login with protected routes
+- **Mobile-Responsive Layout** — full usability on phones and tablets via Tailwind CSS
 
 ---
 
-## Tech Stack
+## Technologies Used
 
-| Layer | Libraries & Tools |
+### Frontend
+| Technology | Purpose |
 |---|---|
-| **Frontend** | React 18, Vite 5, Tailwind CSS 3, @hello-pangea/dnd, React Hook Form + Zod, Sonner toasts, Lucide React, Axios |
-| **Backend** | Node.js + Express 4, MongoDB + Mongoose 8, JWT auth, bcryptjs, Helmet, CORS, Zod validation, express-rate-limit |
+| React 18 | UI component library |
+| Vite 5 | Build tool and dev server |
+| Tailwind CSS 3 | Utility-first styling |
+| @hello-pangea/dnd | Drag-and-drop for the Kanban board |
+| React Hook Form + Zod | Form handling and validation |
+| Axios | HTTP client with JWT interceptors |
+| React Router DOM v6 | Client-side routing |
+| Radix UI | Accessible dialog, dropdown, tab primitives |
+| Sonner | Toast notifications |
+| Lucide React | Icon set |
+
+### Backend
+| Technology | Purpose |
+|---|---|
+| Node.js + Express 4 | REST API server |
+| MongoDB + Mongoose 8 | Database and ODM |
+| JSON Web Tokens (JWT) | Authentication |
+| bcryptjs | Password hashing |
+| Helmet | HTTP security headers |
+| CORS | Cross-origin request handling |
+| Zod | Server-side request validation |
+| express-rate-limit | API rate limiting |
 
 ---
 
-## Prerequisites
+## Setup and Installation
+
+### Prerequisites
 
 - **Node.js** ≥ 18
 - **npm** ≥ 9
-- **MongoDB** — Atlas account (free tier works) or a local MongoDB instance
-
----
-
-## Local Development Setup
+- **MongoDB** — [Atlas free tier](https://www.mongodb.com/atlas) or a local MongoDB instance
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/taskforge.git
-cd taskforge
+git clone https://github.com/Prasadbhat-18/TeamForge.git
+cd TeamForge/taskforge
 ```
 
 ### 2. Install all dependencies
 
 ```bash
-npm install && npm install --prefix client && npm install --prefix server
+npm install
+npm install --prefix client
+npm install --prefix server
 ```
 
-### 3. Create the server environment file
-
-Copy the example and fill in your values:
+### 3. Configure the server environment
 
 ```bash
 cp server/.env.example server/.env
 ```
 
-Open `server/.env` and set:
+Edit `server/.env`:
 
 ```env
 PORT=5000
@@ -66,34 +92,52 @@ JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
 CLIENT_URL=http://localhost:5173
 ```
 
-| Variable | Description |
-|---|---|
-| `PORT` | Port the Express server listens on |
-| `MONGO_URI` | Full MongoDB connection string (Atlas or local) |
-| `JWT_SECRET` | Secret used to sign and verify JWTs — keep this long and random |
-| `CLIENT_URL` | Origin of the Vite dev server — used for CORS allow-list |
-
-### 4. Create the client environment file
+### 4. Configure the client environment
 
 ```bash
 echo VITE_API_URL=http://localhost:5000 > client/.env
 ```
 
-### 5. Seed the database
+### 5. Seed the database (optional)
 
-This creates two demo users and a sample project with tasks:
+Creates two demo users and a sample project with tasks:
 
 ```bash
 npm run seed
 ```
 
-### 6. Start both dev servers
+---
+
+## How to Run the Application
+
+### Development mode (both servers together)
 
 ```bash
 npm run dev
 ```
 
-The Vite dev server starts on **http://localhost:5173** and the Express API on **http://localhost:5000**. Vite proxies `/api` requests to Express so there are no CORS issues in development.
+- Frontend: **http://localhost:5173**
+- Backend API: **http://localhost:5000**
+
+Vite proxies all `/api` requests to Express, so there are no CORS issues in development.
+
+### Run servers individually
+
+```bash
+# Backend only
+cd server && npm run dev
+
+# Frontend only
+cd client && npm run dev
+```
+
+### Production build
+
+```bash
+cd client && npm run build
+```
+
+The output lands in `client/dist`. Deploy that folder to any static host (Vercel, Netlify) and point `VITE_API_URL` at your deployed Express server.
 
 ---
 
@@ -109,82 +153,32 @@ Password: Demo@1234
 
 ---
 
-## API Endpoints Reference
+## AI Tool Used — Kiro
 
-All endpoints (except auth) require an `Authorization: Bearer <token>` header.
-
-### Auth
-
-| Method | Path | Description |
-|---|---|---|
-| `POST` | `/api/auth/register` | Create a new account |
-| `POST` | `/api/auth/login` | Log in and receive a JWT |
-
-### Projects
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/projects` | List all projects the authenticated user belongs to |
-| `POST` | `/api/projects` | Create a new project |
-| `GET` | `/api/projects/:id` | Get a single project with members |
-| `PUT` | `/api/projects/:id` | Update project name / description |
-| `DELETE` | `/api/projects/:id` | Delete a project and all its tasks |
-| `POST` | `/api/projects/:id/members` | Add a member by email |
-| `DELETE` | `/api/projects/:id/members` | Remove a member by userId |
-
-### Tasks
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/projects/:id/tasks` | List all tasks for a project |
-| `POST` | `/api/projects/:id/tasks` | Create a task in a project |
-| `PUT` | `/api/tasks/:id` | Update a task (full update) |
-| `DELETE` | `/api/tasks/:id` | Delete a task |
-| `PATCH` | `/api/tasks/:id/status` | Update only the status (used by drag-and-drop) |
-
-### Activity
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/projects/:id/activity` | Fetch the activity log for a project |
-
-### Dashboard
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/dashboard` | Returns stats and tasks assigned to the current user |
+This project was built using **[Kiro](https://kiro.dev)**, an AI-powered development environment built on VS Code. Kiro is an agentic coding assistant that can read and write files, run terminal commands, and work autonomously through complex multi-step tasks.
 
 ---
 
-## Environment Variables Reference
+## AI Development Experience
 
-| Name | Used In | Description |
-|---|---|---|
-| `PORT` | `server/.env` | Port the Express server binds to (default `5000`) |
-| `MONGO_URI` | `server/.env` | MongoDB connection string |
-| `JWT_SECRET` | `server/.env` | Secret for signing JWTs |
-| `CLIENT_URL` | `server/.env` | Allowed CORS origin (Vite dev server URL) |
-| `VITE_API_URL` | `client/.env` | Base URL the Axios client uses for API requests |
+Kiro was used throughout the entire development lifecycle — from initial scaffolding to debugging and documentation. Rather than just suggesting code snippets, Kiro acted as a full development partner: it read the existing codebase, made decisions about architecture, implemented features end-to-end, ran builds to verify correctness, and fixed errors it discovered along the way.
 
----
+### Specific tasks where Kiro was used
 
-## Production Build
+**1. Full-Stack Application Scaffolding**
+Kiro generated the entire initial project structure from scratch — the Express server with MongoDB connection, Mongoose models (`User`, `Project`, `Task`, `Activity`), JWT authentication middleware, Zod validation schemas, and the React frontend with Vite, Tailwind CSS, and React Router. It wired all the layers together and ensured the API and client were correctly connected from the start.
 
-Build the React app into static files:
+**2. Kanban Board and Drag-and-Drop Implementation**
+Kiro implemented the complete Kanban board component using `@hello-pangea/dnd`. This included the `DragDropContext`, `Droppable` column containers, and `Draggable` task cards. It also wrote the `PATCH /api/tasks/:id/status` endpoint on the backend and connected the drag-end handler to optimistically update the UI while persisting the new status to MongoDB — with snapshot-based rollback on failure.
 
-```bash
-cd client && npm run build
-```
+**3. API Development and Database Integration**
+Kiro created all REST API endpoints across auth, projects, tasks, activity, and dashboard resources. It wrote the Mongoose aggregation pipeline in `projectController` to count tasks per project and attach those counts to project cards — a non-trivial query that joins the `tasks` collection against each project. It also built the activity logging system that automatically records every task mutation and membership change.
 
-Output is written to `client/dist`. Serve that directory with any static host (Vercel, Netlify, Render static site) and point `VITE_API_URL` at your deployed Express server.
+**4. Debugging and Crash Fixes**
+When the application was crashing on startup, Kiro diagnosed the root causes by reading all key files, identifying broken imports, incorrect middleware ordering, and missing environment variable guards. It fixed a duplicate Tailwind class conflict on the board's search wrapper, corrected the modal dismissal order in the delete-project handler (ensuring `setDeleteConfirm(false)` fires before `navigate()`), and resolved a series of runtime errors — then verified the fix by running `vite build` to confirm zero errors before committing.
 
-To run the Express server in production:
-
-```bash
-cd server && node src/index.js
-```
-
-Set `NODE_ENV=production` and make sure all environment variables are configured in your host's secrets manager.
+**5. Component Development — Task Dialog and Project Cards**
+Kiro built the full task create/edit dialog using React Hook Form and Zod for client-side validation. The dialog handles both create and edit modes from a single component, populates all fields (title, description, priority, assignee, due date, status) from existing task data when editing, and calls the correct API endpoint based on mode. It also added task count chips to project cards using data from the server aggregation, and built the delete-project confirmation modal with proper state management.
 
 ---
 
@@ -194,35 +188,44 @@ Set `NODE_ENV=production` and make sure all environment variables are configured
 taskforge/
 ├── client/                   # Vite + React frontend
 │   ├── src/
-│   │   ├── api/              # Thin Axios wrappers per resource
-│   │   ├── components/       # Board, TaskDialog, Layout
+│   │   ├── api/              # Axios wrappers per resource
+│   │   ├── components/       # Board, TaskDialog, Layout, ProtectedRoute
 │   │   ├── context/          # AuthContext (JWT storage + user state)
 │   │   ├── lib/              # axios.js (interceptors), utils.js
 │   │   └── pages/            # DashboardPage, ProjectsPage, ProjectDetailPage
 │   └── vite.config.js
 ├── server/                   # Express + Mongoose backend
 │   └── src/
-│       ├── controllers/      # projectController, taskController, …
-│       ├── middleware/        # authMiddleware, errorHandler, validate
+│       ├── controllers/      # projectController, taskController, authController, …
+│       ├── middleware/        # authMiddleware, errorHandler, validate, projectAccess
 │       ├── models/           # Project, Task, User, Activity
-│       ├── routes/           # projects, tasks, auth, dashboard
+│       ├── routes/           # projects, tasks, auth, dashboard, activity
 │       ├── scripts/          # seed.js
 │       └── validators/       # Zod schemas
-├── package.json              # Root: concurrently dev script + seed script
+├── package.json              # Root: concurrently dev script
 └── README.md
 ```
 
 ---
 
-## Contributing
+## API Reference
 
-1. Fork the repo and create a feature branch: `git checkout -b feat/your-feature`
-2. Follow the existing code style — ESM imports, Tailwind utility classes, Sonner toasts for user feedback
-3. Keep API calls in `client/src/api/` wrappers; keep Express handlers in `server/src/controllers/`
-4. Open a pull request with a clear description of what changed and why
+All endpoints except `/api/auth/*` require `Authorization: Bearer <token>`.
 
----
-
-## AI Development
-
-This project was scaffolded and developed with the assistance of **[Kiro](https://kiro.dev)**, an AI-powered development environment. Kiro generated the initial architecture, implemented features end-to-end, and wrote this documentation.
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/api/auth/register` | Create a new account |
+| `POST` | `/api/auth/login` | Log in, receive a JWT |
+| `GET` | `/api/projects` | List projects for the current user |
+| `POST` | `/api/projects` | Create a project |
+| `GET` | `/api/projects/:id` | Get project details with members |
+| `DELETE` | `/api/projects/:id` | Delete project and all its tasks |
+| `POST` | `/api/projects/:id/members` | Add a member by email |
+| `DELETE` | `/api/projects/:id/members` | Remove a member by userId |
+| `GET` | `/api/projects/:id/tasks` | List tasks for a project |
+| `POST` | `/api/projects/:id/tasks` | Create a task |
+| `PUT` | `/api/tasks/:id` | Update a task |
+| `DELETE` | `/api/tasks/:id` | Delete a task |
+| `PATCH` | `/api/tasks/:id/status` | Update task status (drag-and-drop) |
+| `GET` | `/api/projects/:id/activity` | Fetch project activity log |
+| `GET` | `/api/dashboard` | Get personal stats and assigned tasks |
