@@ -1,4 +1,4 @@
-﻿import Activity from '../models/Activity.js';
+import Activity from '../models/Activity.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 
 export const getActivity = asyncHandler(async (req, res) => {

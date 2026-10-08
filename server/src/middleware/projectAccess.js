@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import Project from '../models/Project.js';
 
 export const projectAccess = async (req, res, next) => {

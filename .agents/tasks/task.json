@@ -1,0 +1,7 @@
+{
+  "task_id": "task-taskforge-polish-and-readme",
+  "task_description": "Polish TaskForge: add task counts to project cards (backend aggregation + frontend display), add delete-project UI with confirmation modal, improve board toolbar UX (search clear button, fix assignee filter comparison), fix mobile board overflow, add error toast on project load failure, and replace the stub README with comprehensive documentation.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}

@@ -1,4 +1,4 @@
-﻿import Project from '../models/Project.js';
+import Project from '../models/Project.js';
 import Task from '../models/Task.js';
 import Activity from '../models/Activity.js';
 import { asyncHandler } from '../utils/asyncHandler.js';

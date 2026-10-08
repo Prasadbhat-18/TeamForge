@@ -1,4 +1,4 @@
-﻿import { Router } from 'express';
+import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { register, login, getMe } from '../controllers/authController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';

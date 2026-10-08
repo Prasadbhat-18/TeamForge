@@ -1,0 +1,30 @@
+{
+  "project_type": "MERN full-stack: React+Vite+Tailwind frontend, Node/Express/MongoDB backend",
+  "language": "JavaScript (ESM throughout — both client and server use `\"type\": \"module\"`)",
+  "build_system": "Root package.json runs concurrently: `npm run dev --prefix server` + `npm run dev --prefix client`. Client: Vite 5. Server: nodemon. No monorepo workspace links — each sub-package has its own node_modules.",
+  "test_framework": "Vitest in server (no test files yet written for this feature set). No client test framework configured.",
+  "build_command": "cd client && npm run build (for client-only build); npm run dev (root, for full dev stack)",
+  "test_command": "cd server && npx vitest --run (no tests exist for these features; run build check instead: cd client && npm run build)",
+  "verification_instructions": "1. From repo root run `npm run dev` to start both processes. 2. Open http://localhost:5173. 3. Log in as demo1@taskforge.dev / Demo@1234. 4. Verify feature-specific behaviour as described in each FEAT's verification field. 5. For a build smoke-test run `cd client && npm run build` and confirm no Vite errors.",
+  "snapshot_or_generated_files": null,
+  "environment_constraints": "Windows PowerShell. Paths use backslashes. Do NOT restart the server during verification if it is already running — the dev watcher reloads automatically on file save. The MongoDB Atlas URI is already in server/.env.",
+  "contribution_requirements": "No AGENTS.md or CONTRIBUTING.md present. Follow existing code style: ESM imports, no semicolons in JSX files, Tailwind utility classes, sonner toasts for all user-visible errors/successes.",
+  "key_patterns": "API calls via client/src/api/*.js thin wrappers over axios instance in client/src/lib/axios.js. Server controllers use asyncHandler wrapper from utils/asyncHandler.js. Toast notifications via `import { toast } from 'sonner'`. Lucide React icons. react-hook-form + zod for forms. Confirmation modals: inline JSX overlay with `fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40` (see ProjectsPage create-project dialog as canonical example). Skeleton loaders: `<div className='animate-pulse bg-gray-200 rounded …'>`. Project cards in ProjectsPage.jsx use a `<Link>` wrapper.",
+  "relevant_files": [
+    "taskforge/server/src/controllers/projectController.js",
+    "taskforge/server/src/models/Project.js",
+    "taskforge/server/src/models/Task.js",
+    "taskforge/server/src/routes/projects.js",
+    "taskforge/client/src/pages/ProjectsPage.jsx",
+    "taskforge/client/src/pages/ProjectDetailPage.jsx",
+    "taskforge/client/src/components/Board.jsx",
+    "taskforge/client/src/api/projects.js",
+    "taskforge/client/src/api/tasks.js",
+    "taskforge/client/src/lib/axios.js",
+    "taskforge/client/src/lib/utils.js",
+    "taskforge/client/vite.config.js",
+    "taskforge/server/src/app.js",
+    "taskforge/README.md"
+  ],
+  "directory_structure": "taskforge/ (root, concurrently script + seed script)\n  client/ — Vite+React app\n    src/\n      api/          — thin axios wrappers per resource\n      components/   — Board.jsx, TaskDialog.jsx, Layout.jsx\n      context/      — AuthContext.jsx\n      lib/          — axios.js, utils.js\n      pages/        — DashboardPage, ProjectsPage, ProjectDetailPage\n  server/ — Express app\n    src/\n      controllers/  — projectController.js, taskController.js, …\n      middleware/   — authMiddleware, errorHandler, projectAccess, validate\n      models/       — Project.js, Task.js, User.js, Activity.js\n      routes/       — projects.js, tasks.js, auth.js, …\n      scripts/      — seed.js\n      validators/   — projectValidator.js\n    .env            — MONGO_URI, JWT_SECRET, etc."
+}

@@ -1,4 +1,4 @@
-﻿import { Router } from 'express';
+import { Router } from 'express';
 import { getActivity } from '../controllers/activityController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import { projectAccess } from '../middleware/projectAccess.js';

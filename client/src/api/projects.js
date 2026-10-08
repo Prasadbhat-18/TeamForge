@@ -1,4 +1,4 @@
-﻿import api from "../lib/axios.js";
+import api from "../lib/axios.js";
 export const getProjects = () => api.get("/api/projects").then(r=>r.data);
 export const createProject = d => api.post("/api/projects",d).then(r=>r.data);
 export const getProject = id => api.get(`/api/projects/${id}`).then(r=>r.data);

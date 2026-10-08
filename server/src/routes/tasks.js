@@ -1,4 +1,4 @@
-﻿import { Router } from 'express';
+import { Router } from 'express';
 import { getTasks, createTask, updateTask, patchTaskStatus, deleteTask } from '../controllers/taskController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import { projectAccess } from '../middleware/projectAccess.js';

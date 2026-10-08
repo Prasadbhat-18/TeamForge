@@ -1,4 +1,4 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 
 const statusEnum = z.enum(['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE']);
 const priorityEnum = z.enum(['LOW', 'MEDIUM', 'HIGH']);
