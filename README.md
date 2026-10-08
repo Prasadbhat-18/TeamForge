@@ -99,8 +99,10 @@ CLIENT_URL=http://localhost:5173
 
 ### 4. Configure the client environment
 
-```bash
-echo VITE_API_URL=http://localhost:5000 > client/.env
+Create `client/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000
 ```
 
 ### 5. Seed the database (optional)
@@ -148,7 +150,7 @@ The output lands in `client/dist`. Deploy that folder to any static host (Vercel
 
 ## Demo Credentials
 
-Try the live app at **[https://teamforge00.netlify.app](https://teamforge00.netlify.app)** using these credentials:
+Try the live app at **[https://teamforge00.netlify.app](https://teamforge00.netlify.app)**:
 
 ```
 Email:    demo1@taskforge.dev
@@ -160,6 +162,27 @@ Password: Demo@1234
 
 ---
 
+## Deployment
+
+| Service | URL |
+|---|---|
+| Frontend (Netlify) | https://teamforge00.netlify.app |
+| Backend (Render) | https://teamforge-1-qvya.onrender.com |
+| Database (MongoDB Atlas) | cluster0.ogk2twu.mongodb.net |
+
+**Frontend** is deployed on Netlify connected to the `main` branch - every push triggers an automatic redeploy.
+
+**Backend** is deployed on Render as a Node.js web service with the following environment variables set in the Render dashboard:
+
+| Variable | Description |
+|---|---|
+| `MONGO_URI` | MongoDB Atlas connection string |
+| `JWT_SECRET` | Secret key for signing JWTs |
+| `CLIENT_URL` | Netlify frontend URL (for CORS) |
+| `NODE_ENV` | Set to `production` |
+
+---
+
 ## AI Tool Used - Kiro
 
 This project was built using **[Kiro](https://kiro.dev)**, an AI-powered development environment built on VS Code. Kiro is an agentic coding assistant that can read and write files, run terminal commands, and work autonomously through complex multi-step tasks.
@@ -168,7 +191,7 @@ This project was built using **[Kiro](https://kiro.dev)**, an AI-powered develop
 
 ## AI Development Experience
 
-Kiro was used throughout the entire development lifecycle - from initial scaffolding to debugging and documentation. Rather than just suggesting code snippets, Kiro acted as a full development partner: it read the existing codebase, made decisions about architecture, implemented features end-to-end, ran builds to verify correctness, and fixed errors it discovered along the way.
+Kiro was used throughout the entire development lifecycle - from initial scaffolding to debugging and deployment. Rather than just suggesting code snippets, Kiro acted as a full development partner: it read the existing codebase, made decisions about architecture, implemented features end-to-end, ran builds to verify correctness, and fixed errors it discovered along the way.
 
 ### Specific tasks where Kiro was used
 
@@ -182,7 +205,7 @@ Kiro implemented the complete Kanban board component using `@hello-pangea/dnd`. 
 Kiro created all REST API endpoints across auth, projects, tasks, activity, and dashboard resources. It wrote the Mongoose aggregation pipeline in `projectController` to count tasks per project and attach those counts to project cards - a non-trivial query that joins the `tasks` collection against each project. It also built the activity logging system that automatically records every task mutation and membership change.
 
 **4. Debugging and Crash Fixes**
-When the application was crashing on startup, Kiro diagnosed the root causes by reading all key files, identifying broken imports, incorrect middleware ordering, and missing environment variable guards. It fixed a duplicate Tailwind class conflict on the board's search wrapper, corrected the modal dismissal order in the delete-project handler (ensuring `setDeleteConfirm(false)` fires before `navigate()`), and resolved a series of runtime errors - then verified the fix by running `vite build` to confirm zero errors before committing.
+When the application was crashing on startup, Kiro diagnosed the root causes by reading all key files, identifying broken imports, incorrect middleware ordering, and missing environment variable guards. It fixed a duplicate Tailwind class conflict on the board's search wrapper, corrected the modal dismissal order in the delete-project handler, and resolved CORS and deployment configuration issues across Netlify and Render - then verified each fix before committing.
 
 **5. Component Development - Task Dialog and Project Cards**
 Kiro built the full task create/edit dialog using React Hook Form and Zod for client-side validation. The dialog handles both create and edit modes from a single component, populates all fields (title, description, priority, assignee, due date, status) from existing task data when editing, and calls the correct API endpoint based on mode. It also added task count chips to project cards using data from the server aggregation, and built the delete-project confirmation modal with proper state management.
@@ -209,6 +232,7 @@ taskforge/
 │       ├── routes/           # projects, tasks, auth, dashboard, activity
 │       ├── scripts/          # seed.js
 │       └── validators/       # Zod schemas
+├── netlify.toml              # Netlify build configuration
 ├── package.json              # Root: concurrently dev script
 └── README.md
 ```
